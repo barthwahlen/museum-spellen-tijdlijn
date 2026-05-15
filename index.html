@@ -191,7 +191,6 @@ body {
   z-index: 20;
   font-weight: 700;
 }
-.person-card.in-zone:hover .return-btn,
 .person-card.in-zone .return-btn { display: block; }
 
 /* Timeline */
@@ -392,11 +391,22 @@ const persons = [
   { id:'p8', emoji:'🏗️', name:'Menno van Coehoorn',     role:'Nederlands vestingbouwer', correctZone:'z5', hint:'Republiek — ik bouwde de vestinggordel rond Maastricht.', color:'#00cc55' },
 ];
 
+const personsById = Object.fromEntries(persons.map(p => [p.id, p]));
+const zonesById   = Object.fromEntries(zones.map(z => [z.id, z]));
+
 let placement = {};
 let checked = false;
 let selectedId = null;
 
 function yearToPercent(y) { return ((y - START_YEAR) / (END_YEAR - START_YEAR)) * 100; }
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
 function setSelected(id) {
   selectedId = id;
@@ -424,7 +434,7 @@ function buildTimeline() {
   markersEl.appendChild(rope);
   zonesEl.innerHTML = '';
 
-  zones.forEach(z => {
+  zones.forEach((z, i) => {
     const sp = yearToPercent(z.startYear), ep = yearToPercent(z.endYear);
     const wp = ep - sp, mp = (sp + ep) / 2;
 
@@ -442,7 +452,7 @@ function buildTimeline() {
 
     const nl = document.createElement('div');
     nl.style.cssText = `position:absolute;top:50px;left:${mp}%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:9px;font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.9);pointer-events:none;z-index:2;user-select:none;`;
-    nl.textContent = zones.indexOf(z) + 1;
+    nl.textContent = i + 1;
     markersEl.appendChild(nl);
 
     const el = document.createElement('div');
@@ -473,11 +483,11 @@ function buildTimeline() {
   });
 }
 
-function buildCards(shuffle = true) {
+function buildCards(doShuffle = true) {
   const pool = document.getElementById('card-pool');
   pool.querySelectorAll('.person-card').forEach(c => c.remove());
   let list = [...persons];
-  if (shuffle) list = list.sort(() => Math.random() - 0.5);
+  if (doShuffle) list = shuffle(list);
   list.forEach(p => pool.appendChild(createCard(p, false)));
 }
 
@@ -508,7 +518,6 @@ function createCard(p, inZone) {
     e.dataTransfer.setDragImage(ghost, ghost.offsetWidth/2, ghost.offsetHeight/2);
     setTimeout(() => document.body.removeChild(ghost), 0);
   });
-  card.addEventListener('dragend', () => {});
 
   // Tap / click to select
   card.addEventListener('click', e => {
@@ -527,25 +536,23 @@ function createCard(p, inZone) {
 function placeCard(zoneId) {
   if (!selectedId || checked) return;
 
-  // Remove from current location
+  // Remove card from DOM (pool or zone) and update placement state
+  document.getElementById('card-' + selectedId)?.remove();
   for (const [zid, pids] of Object.entries(placement)) {
     const idx = pids.indexOf(selectedId);
     if (idx !== -1) {
       pids.splice(idx, 1);
       if (pids.length === 0) { delete placement[zid]; document.getElementById(zid)?.classList.remove('has-card'); }
-      document.getElementById('card-' + selectedId)?.remove();
+      break;
     }
   }
-  document.getElementById('card-' + selectedId)?.remove();
 
   if (!placement[zoneId]) placement[zoneId] = [];
   placement[zoneId].push(selectedId);
 
   const zone = document.getElementById(zoneId);
   zone.classList.add('has-card');
-
-  const person = persons.find(p => p.id === selectedId);
-  zone.appendChild(createCard(person, true));
+  zone.appendChild(createCard(personsById[selectedId], true));
 
   setSelected(null);
 }
@@ -557,10 +564,10 @@ function returnCardToPool(personId) {
       pids.splice(idx, 1);
       if (pids.length === 0) { delete placement[zid]; document.getElementById(zid)?.classList.remove('has-card','correct','wrong'); }
       document.getElementById('card-' + personId)?.remove();
+      break;
     }
   }
-  const pool = document.getElementById('card-pool');
-  pool.appendChild(createCard(persons.find(p => p.id === personId), false));
+  document.getElementById('card-pool').appendChild(createCard(personsById[personId], false));
 }
 
 function showWarning(msg) {
@@ -580,11 +587,15 @@ function checkAnswers() {
   let correct = 0;
   const details = [];
 
+  // Build reverse map once instead of scanning placement per person
+  const personZone = {};
+  for (const [zid, pids] of Object.entries(placement)) {
+    for (const pid of pids) personZone[pid] = zid;
+  }
+
   persons.forEach(p => {
-    let placedZone = null;
-    for (const [zid, pids] of Object.entries(placement)) { if (pids.includes(p.id)) { placedZone = zid; break; } }
-    const ok = placedZone === p.correctZone;
-    const czLabel = zones.find(z => z.id === p.correctZone).label;
+    const ok = personZone[p.id] === p.correctZone;
+    const czLabel = zonesById[p.correctZone].label;
     const cardEl = document.getElementById('card-' + p.id);
     if (ok) { correct++; cardEl?.classList.add('placed-correct'); details.push(`<span class="ok">✅ ${p.name}</span> — correct in <em>${czLabel}</em>!`); }
     else      { cardEl?.classList.add('placed-wrong');  details.push(`<span class="err">❌ ${p.name}</span> — hoort bij <em>${czLabel}</em>`); }
@@ -594,8 +605,8 @@ function checkAnswers() {
     const el = document.getElementById(z.id);
     if (!el) return;
     const pids = placement[z.id] || [];
-    const allOk  = pids.length > 0 && pids.every(pid => persons.find(p=>p.id===pid)?.correctZone === z.id);
-    const anyBad = pids.some(pid => persons.find(p=>p.id===pid)?.correctZone !== z.id);
+    const allOk  = pids.length > 0 && pids.every(pid => personsById[pid]?.correctZone === z.id);
+    const anyBad = pids.some(pid => personsById[pid]?.correctZone !== z.id);
     if (allOk) el.classList.add('correct');
     else if (anyBad) el.classList.add('wrong');
   });
@@ -626,7 +637,6 @@ function resetGame() {
     if (el) { el.classList.remove('has-card','correct','wrong'); el.querySelectorAll('.person-card').forEach(c=>c.remove()); }
   });
   buildCards(true);
-  buildTimeline();
 }
 
 // Klik buiten kaarten = deselecteer
