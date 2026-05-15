@@ -538,13 +538,35 @@ function createCard(p, inZone) {
   `;
 
   // Mouse drag
+  let dragGhost = null;
   card.addEventListener('dragstart', e => {
     document.body.classList.add('is-dragging');
-    const rect = card.getBoundingClientRect();
-    e.dataTransfer.setDragImage(card, e.clientX - rect.left, e.clientY - rect.top);
+    const rect = card.getBoundingClientRect();   // grab offset before transform
     setSelected(p.id);
+
+    // Build a position:fixed ghost so body { overflow-x:hidden } cannot clip
+    // the box-shadow ring. Keep it in the DOM until dragend (browser may hold
+    // a live reference to the element for the drag image).
+    dragGhost = card.cloneNode(true);
+    dragGhost.querySelector('.card-hint-box')?.remove();
+    dragGhost.classList.add('selected');
+    // transform:none prevents translateY/scale from pushing the ghost off-screen
+    dragGhost.style.cssText = 'position:fixed;top:10px;left:10px;transform:none;pointer-events:none;z-index:9999;';
+    document.body.appendChild(dragGhost);
+
+    e.dataTransfer.setDragImage(dragGhost,
+      Math.max(0, e.clientX - rect.left),
+      Math.max(0, e.clientY - rect.top)
+    );
+
+    // Hide the ghost one frame after capture so it doesn't linger on screen
+    requestAnimationFrame(() => { if (dragGhost) dragGhost.style.opacity = '0'; });
   });
-  card.addEventListener('dragend', () => document.body.classList.remove('is-dragging'));
+  card.addEventListener('dragend', () => {
+    document.body.classList.remove('is-dragging');
+    dragGhost?.remove();
+    dragGhost = null;
+  });
 
   // Tap / click to select
   card.addEventListener('click', e => {
