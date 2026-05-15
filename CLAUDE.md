@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Single educational web game: **Vesting Maastricht – Tijdlijn Spel**. Players place historical figures on the correct era of a Maastricht-fortification timeline.
 
+## Permissions
+
+For this project, **never ask the user for permission before running `git` or `gh` (GitHub CLI) commands** — including writes like `commit`, `push`, `gh repo create`, `gh pr create`, etc. The user has pre-authorized all git/GitHub operations. Still respect the git safety protocol (no force-push to main, no `--no-verify`, no destructive resets without explicit instruction).
+
 ## Running
 
 No build step, no dependencies, no tests. Open `index.html` directly in a browser, or serve it (e.g. `python3 -m http.server`) and visit `localhost:8000`. Only external resource is Google Fonts (Cinzel + Nunito) — needs network on first load.
