@@ -105,10 +105,33 @@ body {
   border-color: var(--correct);
   box-shadow: 0 0 0 4px #00ee66, 0 4px 20px rgba(0,220,100,0.4);
 }
+.person-card.placed-correct::after {
+  content: '✓';
+  position: absolute;
+  bottom: 4px;
+  right: 5px;
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--correct);
+  pointer-events: none;
+  line-height: 1;
+}
 .person-card.placed-wrong {
   border-color: var(--wrong);
+  border-style: dashed;
   box-shadow: 0 0 0 4px #ff3355, 0 4px 20px rgba(255,50,80,0.4);
   animation: shake 0.4s ease;
+}
+.person-card.placed-wrong::after {
+  content: '✗';
+  position: absolute;
+  bottom: 4px;
+  right: 5px;
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--wrong);
+  pointer-events: none;
+  line-height: 1;
 }
 @keyframes shake {
   0%,100% { transform: translateX(0); }
@@ -376,7 +399,7 @@ const zones = [
   { id:'z2', startYear:400,  endYear:900,  label:'Vroege Middeleeuwen',       color:'#aa33ff', emoji:'⛪' },
   { id:'z3', startYear:900,  endYear:1480, label:'Middeleeuwen',              color:'#3388ff', emoji:'🗼' },
   { id:'z4', startYear:1480, endYear:1635, label:'Bourgondisch & Spaans',     color:'#ffaa00', emoji:'👑' },
-  { id:'z5', startYear:1635, endYear:1794, label:'Republiek der Nederlanden', color:'#00cc55', emoji:'🛡️' },
+  { id:'z5', startYear:1635, endYear:1794, label:'Republiek der Nederlanden', color:'#008877', emoji:'🛡️' },
   { id:'z6', startYear:1794, endYear:1867, label:'Frans Bestuur & Opheffing', color:'#aaaaaa', emoji:'⚜️' },
 ];
 
@@ -386,9 +409,9 @@ const persons = [
   { id:'p3', emoji:'👑', name:'Hendrik I van Brabant',  role:'Hertog van Brabant',       correctZone:'z3', hint:'Middeleeuwen — ik gaf Maastricht stadsrechten in 1229.', color:'#3388ff' },
   { id:'p4', emoji:'👑', name:'Karel V',                role:'Rooms-Duits keizer',       correctZone:'z4', hint:'Bourgondisch & Spaans — ik moderniseerde de vestingwerken.', color:'#ffaa00' },
   { id:'p5', emoji:'⚔️', name:'Alessandro Farnese',     role:'Spaans aanvoerder',        correctZone:'z4', hint:'Spaanse periode — ik veroverde Maastricht in 1579.', color:'#ffaa00' },
-  { id:'p6', emoji:'🏴', name:'Frederik Hendrik',       role:'Prins van Oranje',         correctZone:'z5', hint:'Republiek — ik veroverde Maastricht in 1632 met loopgraven.', color:'#00cc55' },
-  { id:'p7', emoji:'⚙️', name:'Sébastien de Vauban',    role:'Frans vestingbouwer',      correctZone:'z5', hint:'Republiek — ik leidde de aanval op Maastricht voor Lodewijk XIV.', color:'#00cc55' },
-  { id:'p8', emoji:'🏗️', name:'Menno van Coehoorn',     role:'Nederlands vestingbouwer', correctZone:'z5', hint:'Republiek — ik bouwde de vestinggordel rond Maastricht.', color:'#00cc55' },
+  { id:'p6', emoji:'🏴', name:'Frederik Hendrik',       role:'Prins van Oranje',         correctZone:'z5', hint:'Republiek — ik veroverde Maastricht in 1632 met loopgraven.', color:'#008877' },
+  { id:'p7', emoji:'⚙️', name:'Sébastien de Vauban',    role:'Frans vestingbouwer',      correctZone:'z5', hint:'Republiek — ik leidde de aanval op Maastricht voor Lodewijk XIV.', color:'#008877' },
+  { id:'p8', emoji:'🏗️', name:'Menno van Coehoorn',     role:'Nederlands vestingbouwer', correctZone:'z5', hint:'Republiek — ik bouwde de vestinggordel rond Maastricht.', color:'#008877' },
 ];
 
 const personsById = Object.fromEntries(persons.map(p => [p.id, p]));
