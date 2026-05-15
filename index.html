@@ -199,6 +199,7 @@ body {
 }
 .person-card:hover .card-hint-box,
 .person-card.selected .card-hint-box { display: block; }
+body.is-dragging .card-hint-box { display: none !important; }
 
 /* Return-to-pool button (visible on placed cards in zones) */
 .return-btn {
@@ -539,12 +540,15 @@ function createCard(p, inZone) {
   // Mouse drag
   card.addEventListener('dragstart', e => {
     setSelected(p.id);
+    document.body.classList.add('is-dragging');
     const ghost = card.cloneNode(true);
+    ghost.querySelector('.card-hint-box')?.remove();
     ghost.style.cssText = 'position:fixed;top:-999px;left:-999px;opacity:0.9;pointer-events:none;';
     document.body.appendChild(ghost);
-    e.dataTransfer.setDragImage(ghost, ghost.offsetWidth/2, ghost.offsetHeight/2);
+    e.dataTransfer.setDragImage(ghost, card.offsetWidth / 2, card.offsetHeight / 2);
     setTimeout(() => document.body.removeChild(ghost), 0);
   });
+  card.addEventListener('dragend', () => document.body.classList.remove('is-dragging'));
 
   // Tap / click to select
   card.addEventListener('click', e => {
