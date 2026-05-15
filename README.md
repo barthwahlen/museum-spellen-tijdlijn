@@ -2,9 +2,13 @@
 
 Een interactief educatief webspel waarin spelers historische sleutelfiguren op de juiste plek in de geschiedenis van Vesting Maastricht plaatsen. Van de Romeinse tijd tot de opheffing van de vesting in 1867.
 
+## 🎮 Probeer het direct
+
+**▶ [Speel het spel online](https://jackey1947.github.io/museum-spellen-tijdlijn/)**
+
 ## Spelen
 
-Open `index.html` in een moderne browser. Geen installatie, geen build, geen server nodig.
+Of open `index.html` lokaal in een moderne browser. Geen installatie, geen build, geen server nodig.
 
 Of serveer lokaal:
 
