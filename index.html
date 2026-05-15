@@ -12,7 +12,10 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
-  background: linear-gradient(160deg, #1a0050 0%, #2a0080 30%, #0a2080 60%, #001860 100%);
+  background:
+    radial-gradient(ellipse at 22% 15%, rgba(90,10,200,0.38) 0%, transparent 52%),
+    radial-gradient(ellipse at 78% 85%, rgba(10,55,150,0.38) 0%, transparent 52%),
+    linear-gradient(160deg, #0d0030 0%, #16004a 30%, #060e40 65%, #00102e 100%);
   min-height: 100vh;
   font-family: 'Nunito', sans-serif;
   overflow-x: hidden;
@@ -26,7 +29,7 @@ body {
   content: '';
   display: block;
   height: 4px;
-  background: linear-gradient(90deg, #ff4455, #aa33ff, #3388ff, #ffaa00, #008877, #7788aa);
+  background: linear-gradient(90deg, #c44422, #7722bb, #1166cc, #cc8800, #007766, #445577);
   border-radius: 2px;
   margin-top: 16px;
 }
@@ -78,10 +81,10 @@ body {
 }
 .person-card {
   width: clamp(68px, 8vw, 90px);
-  background: #ffffff;
+  background: #fdf6e3;
   border-radius: 14px;
-  border: 3px solid #ddddff;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  border: 3px solid #c8b080;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.40);
   cursor: pointer;
   user-select: none;
   transition: transform 0.15s, box-shadow 0.15s;
@@ -92,7 +95,7 @@ body {
 }
 .person-card:hover {
   transform: translateY(-4px) rotate(1deg);
-  box-shadow: 0 12px 28px rgba(0,0,255,0.3);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
 }
 /* Selected state — big visible highlight for touch */
 .person-card.selected {
@@ -147,8 +150,8 @@ body {
   align-items: center;
   justify-content: center;
   font-size: clamp(24px, 3.5vw, 34px);
-  background: linear-gradient(180deg, rgba(110,85,255,0.13) 0%, rgba(60,140,255,0.05) 100%);
-  border-bottom: 1px solid rgba(0,0,0,0.12);
+  background: linear-gradient(180deg, rgba(140,100,40,0.20) 0%, rgba(140,100,40,0.05) 100%);
+  border-bottom: 1px solid rgba(120,90,30,0.22);
   font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
 }
 .card-era-stripe {
@@ -161,14 +164,14 @@ body {
   font-family: 'Cinzel', serif;
   font-size: 8.5px;
   font-weight: 700;
-  color: #1a1040;
+  color: #2d1800;
   text-align: center;
   padding: 5px 5px 2px;
   line-height: 1.3;
 }
 .card-role {
   font-size: 7.5px;
-  color: #5533aa;
+  color: #7a4400;
   text-align: center;
   padding: 0 5px 6px;
   font-style: italic;
@@ -222,7 +225,7 @@ body {
   position: absolute;
   top: 46px; left: 0; right: 0;
   width: 100%; height: 20px;
-  background: linear-gradient(90deg, #ff4455 0%, #aa33ff 20%, #3388ff 47%, #ffaa00 79%, #008877 88%, #7788aa 100%);
+  background: linear-gradient(90deg, #c44422 0%, #7722bb 20%, #1166cc 47%, #cc8800 79%, #007766 88%, #445577 100%);
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(100,0,255,0.5), inset 0 2px 0 rgba(255,255,255,0.4);
 }
@@ -310,29 +313,30 @@ body {
 /* Buttons */
 .btn-row { display: flex; gap: 14px; justify-content: center; padding: 20px 0 24px; flex-wrap: wrap; }
 .btn { padding: 12px 30px; border: none; border-radius: 40px; font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 1px; transition: all 0.2s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-.btn-check { background: linear-gradient(135deg, #00aa44, #00ee66); color: #fff; font-size: 16px; }
+.btn-check { background: linear-gradient(135deg, #aa7700, #ffcc00); color: #2d1800; font-size: 16px; }
 .btn-reset { background: rgba(244,232,193,0.08); color: rgba(200,220,255,0.9); border: 1px solid rgba(244,232,193,0.2); }
 
 /* Result popup */
 .result-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; }
 .result-overlay.show { display: flex; }
 .result-box {
-  background: linear-gradient(160deg, #f0f4ff 0%, #fff8f0 100%);
+  background: linear-gradient(160deg, #fdf6e3 0%, #f5e8c8 100%);
   border-radius: 20px;
+  border: 2px solid rgba(180,140,40,0.30);
   padding: 36px 40px;
   max-width: 480px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
   animation: popIn 0.4s cubic-bezier(0.22,1,0.36,1);
 }
 @keyframes popIn { from { opacity:0; transform: scale(0.7); } to { opacity:1; transform: scale(1); } }
 .result-seal { font-size: 64px; line-height: 1; margin-bottom: 12px; font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; }
-.result-title { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 900; color: #1a1040; margin-bottom: 8px; }
+.result-title { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 900; color: #2d1800; margin-bottom: 8px; }
 .result-score { font-family: 'Cinzel', serif; font-size: 36px; font-weight: 900; margin: 12px 0; }
-.result-msg { font-size: 14px; color: #5533aa; line-height: 1.7; margin-bottom: 20px; }
+.result-msg { font-size: 14px; color: #5a3800; line-height: 1.7; margin-bottom: 20px; }
 .result-stars { font-size: 36px; margin: 8px 0 16px; font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; letter-spacing: 6px; }
-.result-detail { font-size: 12px; color: #5533aa; background: rgba(100,80,200,0.08); border-radius: 10px; padding: 10px 14px; text-align: left; margin-bottom: 20px; max-height: 150px; overflow-y: auto; line-height: 1.8; }
+.result-detail { font-size: 12px; color: #5a3800; background: rgba(140,100,20,0.10); border-radius: 10px; border: 1px solid rgba(180,140,40,0.20); padding: 10px 14px; text-align: left; margin-bottom: 20px; max-height: 150px; overflow-y: auto; line-height: 1.8; }
 .result-detail .ok  { color: var(--correct); font-weight: 700; }
 .result-detail .err { color: var(--wrong);   font-weight: 700; }
 .btn-play-again { background: linear-gradient(135deg, #4411bb, #aa22ff); color: #fff; border: none; padding: 14px 40px; border-radius: 40px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
@@ -395,23 +399,23 @@ body {
 const START_YEAR = 50, END_YEAR = 1867;
 
 const zones = [
-  { id:'z1', startYear:50,   endYear:400,  label:'Romeinse Tijd',            color:'#ff4455', emoji:'🏛️' },
-  { id:'z2', startYear:400,  endYear:900,  label:'Vroege Middeleeuwen',       color:'#aa33ff', emoji:'⛪' },
-  { id:'z3', startYear:900,  endYear:1480, label:'Middeleeuwen',              color:'#3388ff', emoji:'🗼' },
-  { id:'z4', startYear:1480, endYear:1635, label:'Bourgondisch & Spaans',     color:'#ffaa00', emoji:'👑' },
-  { id:'z5', startYear:1635, endYear:1794, label:'Republiek der Nederlanden', color:'#008877', emoji:'🛡️' },
-  { id:'z6', startYear:1794, endYear:1867, label:'Frans Bestuur & Opheffing', color:'#7788aa', emoji:'⚜️' },
+  { id:'z1', startYear:50,   endYear:400,  label:'Romeinse Tijd',            color:'#c44422', emoji:'🏛️' },
+  { id:'z2', startYear:400,  endYear:900,  label:'Vroege Middeleeuwen',       color:'#7722bb', emoji:'⛪' },
+  { id:'z3', startYear:900,  endYear:1480, label:'Middeleeuwen',              color:'#1166cc', emoji:'🗼' },
+  { id:'z4', startYear:1480, endYear:1635, label:'Bourgondisch & Spaans',     color:'#cc8800', emoji:'👑' },
+  { id:'z5', startYear:1635, endYear:1794, label:'Republiek der Nederlanden', color:'#007766', emoji:'🛡️' },
+  { id:'z6', startYear:1794, endYear:1867, label:'Frans Bestuur & Opheffing', color:'#445577', emoji:'⚜️' },
 ];
 
 const persons = [
-  { id:'p1', emoji:'✝️', name:'Servatius van Tongeren', role:'Bisschop van Maastricht', correctZone:'z1', hint:'Ik was de eerste bisschop van de Nederlanden, Romeinse tijd.', color:'#ff4455' },
-  { id:'p2', emoji:'⚜️', name:'Karel de Grote',         role:'Frankisch Keizer',        correctZone:'z2', hint:'Vroege Middeleeuwen — ik versterkte wegen langs de Maas.', color:'#aa33ff' },
-  { id:'p3', emoji:'👑', name:'Hendrik I van Brabant',  role:'Hertog van Brabant',       correctZone:'z3', hint:'Middeleeuwen — ik gaf Maastricht stadsrechten in 1229.', color:'#3388ff' },
-  { id:'p4', emoji:'👑', name:'Karel V',                role:'Rooms-Duits keizer',       correctZone:'z4', hint:'Bourgondisch & Spaans — ik moderniseerde de vestingwerken.', color:'#ffaa00' },
-  { id:'p5', emoji:'⚔️', name:'Alessandro Farnese',     role:'Spaans aanvoerder',        correctZone:'z4', hint:'Spaanse periode — ik veroverde Maastricht in 1579.', color:'#ffaa00' },
-  { id:'p6', emoji:'🏴', name:'Frederik Hendrik',       role:'Prins van Oranje',         correctZone:'z5', hint:'Republiek — ik veroverde Maastricht in 1632 met loopgraven.', color:'#008877' },
-  { id:'p7', emoji:'⚙️', name:'Sébastien de Vauban',    role:'Frans vestingbouwer',      correctZone:'z5', hint:'Republiek — ik leidde de aanval op Maastricht voor Lodewijk XIV.', color:'#008877' },
-  { id:'p8', emoji:'🏗️', name:'Menno van Coehoorn',     role:'Nederlands vestingbouwer', correctZone:'z5', hint:'Republiek — ik bouwde de vestinggordel rond Maastricht.', color:'#008877' },
+  { id:'p1', emoji:'✝️', name:'Servatius van Tongeren', role:'Bisschop van Maastricht', correctZone:'z1', hint:'Ik was de eerste bisschop van de Nederlanden, Romeinse tijd.', color:'#c44422' },
+  { id:'p2', emoji:'⚜️', name:'Karel de Grote',         role:'Frankisch Keizer',        correctZone:'z2', hint:'Vroege Middeleeuwen — ik versterkte wegen langs de Maas.', color:'#7722bb' },
+  { id:'p3', emoji:'👑', name:'Hendrik I van Brabant',  role:'Hertog van Brabant',       correctZone:'z3', hint:'Middeleeuwen — ik gaf Maastricht stadsrechten in 1229.', color:'#1166cc' },
+  { id:'p4', emoji:'👑', name:'Karel V',                role:'Rooms-Duits keizer',       correctZone:'z4', hint:'Bourgondisch & Spaans — ik moderniseerde de vestingwerken.', color:'#cc8800' },
+  { id:'p5', emoji:'⚔️', name:'Alessandro Farnese',     role:'Spaans aanvoerder',        correctZone:'z4', hint:'Spaanse periode — ik veroverde Maastricht in 1579.', color:'#cc8800' },
+  { id:'p6', emoji:'🏴', name:'Frederik Hendrik',       role:'Prins van Oranje',         correctZone:'z5', hint:'Republiek — ik veroverde Maastricht in 1632 met loopgraven.', color:'#007766' },
+  { id:'p7', emoji:'⚙️', name:'Sébastien de Vauban',    role:'Frans vestingbouwer',      correctZone:'z5', hint:'Republiek — ik leidde de aanval op Maastricht voor Lodewijk XIV.', color:'#007766' },
+  { id:'p8', emoji:'🏗️', name:'Menno van Coehoorn',     role:'Nederlands vestingbouwer', correctZone:'z5', hint:'Republiek — ik bouwde de vestinggordel rond Maastricht.', color:'#007766' },
 ];
 
 const personsById = Object.fromEntries(persons.map(p => [p.id, p]));
