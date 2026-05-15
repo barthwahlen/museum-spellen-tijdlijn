@@ -539,14 +539,10 @@ function createCard(p, inZone) {
 
   // Mouse drag
   card.addEventListener('dragstart', e => {
-    setSelected(p.id);
     document.body.classList.add('is-dragging');
-    const ghost = card.cloneNode(true);
-    ghost.querySelector('.card-hint-box')?.remove();
-    ghost.style.cssText = 'position:fixed;top:-999px;left:-999px;opacity:0.9;pointer-events:none;';
-    document.body.appendChild(ghost);
-    e.dataTransfer.setDragImage(ghost, card.offsetWidth / 2, card.offsetHeight / 2);
-    setTimeout(() => document.body.removeChild(ghost), 0);
+    const rect = card.getBoundingClientRect();
+    e.dataTransfer.setDragImage(card, e.clientX - rect.left, e.clientY - rect.top);
+    setSelected(p.id);
   });
   card.addEventListener('dragend', () => document.body.classList.remove('is-dragging'));
 
