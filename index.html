@@ -26,7 +26,7 @@ body {
   content: '';
   display: block;
   height: 4px;
-  background: linear-gradient(90deg, #ff3355, #ff8800, #ffdd00, #00cc66, #2255ff, #aa22ff);
+  background: linear-gradient(90deg, #ff4455, #aa33ff, #3388ff, #ffaa00, #008877, #7788aa);
   border-radius: 2px;
   margin-top: 16px;
 }
@@ -55,7 +55,7 @@ body {
 }
 .field { width: 100%; padding: 0 12px 30px; }
 .card-pool {
-  background: rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.10);
   border: 2px dashed rgba(255,220,0,0.4);
   border-radius: 14px;
   padding: 8px 12px 10px;
@@ -147,8 +147,8 @@ body {
   align-items: center;
   justify-content: center;
   font-size: clamp(24px, 3.5vw, 34px);
-  background: linear-gradient(180deg, rgba(100,80,255,0.08) 0%, rgba(0,150,255,0.04) 100%);
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  background: linear-gradient(180deg, rgba(110,85,255,0.13) 0%, rgba(60,140,255,0.05) 100%);
+  border-bottom: 1px solid rgba(0,0,0,0.12);
   font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
 }
 .card-era-stripe {
@@ -203,7 +203,7 @@ body {
   position: absolute;
   top: -8px; right: -8px;
   width: 20px; height: 20px;
-  background: #ff3355;
+  background: #6622bb;
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -222,7 +222,7 @@ body {
   position: absolute;
   top: 46px; left: 0; right: 0;
   width: 100%; height: 20px;
-  background: linear-gradient(90deg, #ff3355 0%, #ff8800 15%, #ffdd00 30%, #00cc66 50%, #2255ff 70%, #aa22ff 85%, #ff3355 100%);
+  background: linear-gradient(90deg, #ff4455 0%, #aa33ff 20%, #3388ff 47%, #ffaa00 79%, #008877 88%, #7788aa 100%);
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(100,0,255,0.5), inset 0 2px 0 rgba(255,255,255,0.4);
 }
@@ -298,10 +298,10 @@ body {
   display: flex;
   align-items: center;
   gap: 7px;
-  background: rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.10);
   border-radius: 30px;
   padding: 5px 14px 5px 8px;
-  border: 1.5px solid rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.18);
 }
 .legend-swatch { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
 .legend-emoji { font-size: 16px; font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; line-height: 1; }
@@ -335,7 +335,7 @@ body {
 .result-detail { font-size: 12px; color: #5533aa; background: rgba(100,80,200,0.08); border-radius: 10px; padding: 10px 14px; text-align: left; margin-bottom: 20px; max-height: 150px; overflow-y: auto; line-height: 1.8; }
 .result-detail .ok  { color: var(--correct); font-weight: 700; }
 .result-detail .err { color: var(--wrong);   font-weight: 700; }
-.btn-play-again { background: linear-gradient(135deg, #aa00ff, #ff3399); color: #fff; border: none; padding: 14px 40px; border-radius: 40px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+.btn-play-again { background: linear-gradient(135deg, #4411bb, #aa22ff); color: #fff; border: none; padding: 14px 40px; border-radius: 40px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
 
 /* Toast */
 #toast-warning { display:none; position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#ff3355; color:#fff; font-family:'Nunito',sans-serif; font-size:14px; font-weight:700; padding:12px 24px; border-radius:40px; z-index:300; text-align:center; max-width:90vw; }
@@ -400,7 +400,7 @@ const zones = [
   { id:'z3', startYear:900,  endYear:1480, label:'Middeleeuwen',              color:'#3388ff', emoji:'🗼' },
   { id:'z4', startYear:1480, endYear:1635, label:'Bourgondisch & Spaans',     color:'#ffaa00', emoji:'👑' },
   { id:'z5', startYear:1635, endYear:1794, label:'Republiek der Nederlanden', color:'#008877', emoji:'🛡️' },
-  { id:'z6', startYear:1794, endYear:1867, label:'Frans Bestuur & Opheffing', color:'#aaaaaa', emoji:'⚜️' },
+  { id:'z6', startYear:1794, endYear:1867, label:'Frans Bestuur & Opheffing', color:'#7788aa', emoji:'⚜️' },
 ];
 
 const persons = [
