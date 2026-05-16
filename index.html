@@ -164,7 +164,7 @@ body {
   background: var(--bg-surface);
   border: 2px dashed var(--border-pool);
   border-radius: var(--radius-full);
-  padding: var(--sp-7) var(--sp-7) var(--sp-6);
+  padding: var(--sp-7) 0 var(--sp-2);
   margin-bottom: var(--sp-4);
   display: flex;
   flex-wrap: wrap;
@@ -184,7 +184,7 @@ body {
   text-align: center;
 }
 .person-card {
-  width: clamp(90px, 11vw, 120px);
+  width: clamp(110px, 14vw, 150px);
   background: var(--bg-card);
   border-radius: var(--radius-lg);
   border: 3px solid var(--border-card);
@@ -272,7 +272,7 @@ body {
 }
 .card-name {
   font-family: 'MedievalSharp', serif;
-  font-size: var(--fs-xs);
+  font-size: var(--fs-md);
   font-weight: 700;
   color: var(--text-on-card);
   text-align: center;
@@ -281,7 +281,7 @@ body {
   flex-shrink: 0;
 }
 .card-role {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-md);
   color: var(--text-on-card-sub);
   text-align: center;
   padding: 0 var(--sp-2) var(--sp-2);
@@ -444,7 +444,7 @@ body.is-dragging .card-hint-box { display: none !important; }
   margin: var(--sp-2) calc(-1 * var(--sp-4)) calc(-1 * var(--sp-4));
 }
 .zone-cards .person-card {
-  width: clamp(90px, 11vw, 120px);
+  width: clamp(110px, 14vw, 150px);
   flex-shrink: 0;
   align-self: flex-start;
   box-sizing: border-box;
