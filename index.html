@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vesting Maastricht – Tijdlijn Spel</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Caudex:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 :root {
   /* ── Type scale ── */
   --fs-xs:  clamp(11px, 1.8vw, 14px);
@@ -120,7 +120,7 @@
 body {
   background: var(--bg-page);
   min-height: 100vh;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Caudex', serif;
   overflow-x: hidden;
   width: 100%;
 }
@@ -137,7 +137,7 @@ body {
   margin-top: var(--sp-4);
 }
 .header h1 {
-  font-family: 'Cinzel', serif;
+  font-family: 'MedievalSharp', serif;
   font-size: var(--fs-2xl);
   color: var(--text-accent);
   text-shadow: 0 2px 16px var(--text-accent-glow);
@@ -175,7 +175,7 @@ body {
 }
 .pool-label {
   width: 100%;
-  font-family: 'Cinzel', serif;
+  font-family: 'MedievalSharp', serif;
   font-size: var(--fs-xs);
   color: var(--text-accent);
   letter-spacing: 1.5px;
@@ -271,7 +271,7 @@ body {
   border-radius: 8px 8px 0 0;
 }
 .card-name {
-  font-family: 'Cinzel', serif;
+  font-family: 'MedievalSharp', serif;
   font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--text-on-card);
@@ -365,7 +365,7 @@ body.is-dragging .card-hint-box { display: none !important; }
 .timeline-year {
   position: absolute;
   top: var(--sp-2);
-  font-family: 'Cinzel', serif;
+  font-family: 'MedievalSharp', serif;
   font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--year-color);
@@ -414,7 +414,7 @@ body.is-dragging .card-hint-box { display: none !important; }
   font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
 }
 .zone-header-label {
-  font-family: 'Cinzel', serif;
+  font-family: 'MedievalSharp', serif;
   font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--text-on-zone);
@@ -426,7 +426,7 @@ body.is-dragging .card-hint-box { display: none !important; }
 .zone-header-years {
   font-size: var(--fs-lg);
   color: var(--text-on-zone);
-  font-family: 'Cinzel', serif;
+  font-family: 'MedievalSharp', serif;
   font-weight: 700;
   text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
@@ -465,7 +465,7 @@ body.is-dragging .card-hint-box { display: none !important; }
 
 /* Buttons */
 .btn-row { display: flex; gap: var(--sp-4); justify-content: center; padding: var(--sp-5) 0 var(--sp-6); flex-wrap: wrap; }
-.btn { padding: var(--sp-3) var(--sp-8); border: none; border-radius: var(--radius-full); font-family: 'Cinzel', serif; font-size: var(--fs-sm); font-weight: 700; cursor: pointer; letter-spacing: 1px; transition: all 0.2s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.btn { padding: var(--sp-3) var(--sp-8); border: none; border-radius: var(--radius-full); font-family: 'MedievalSharp', serif; font-size: var(--fs-sm); font-weight: 700; cursor: pointer; letter-spacing: 1px; transition: all 0.2s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .btn-check { background: var(--btn-check-bg); color: var(--btn-check-color); font-size: var(--fs-md); }
 .btn-reset { background: var(--btn-reset-bg); color: var(--btn-reset-color); border: 1px solid var(--btn-reset-border); }
 
@@ -485,17 +485,17 @@ body.is-dragging .card-hint-box { display: none !important; }
 }
 @keyframes popIn { from { opacity:0; transform: scale(0.7); } to { opacity:1; transform: scale(1); } }
 .result-seal { font-size: 64px; line-height: 1; margin-bottom: var(--sp-3); font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; }
-.result-title { font-family: 'Cinzel', serif; font-size: var(--fs-xl); font-weight: 900; color: var(--text-on-card); margin-bottom: var(--sp-2); }
-.result-score { font-family: 'Cinzel', serif; font-size: clamp(22px, 3.5vw, 36px); font-weight: 900; margin: var(--sp-3) 0; }
+.result-title { font-family: 'MedievalSharp', serif; font-size: var(--fs-xl); font-weight: 900; color: var(--text-on-card); margin-bottom: var(--sp-2); }
+.result-score { font-family: 'MedievalSharp', serif; font-size: clamp(22px, 3.5vw, 36px); font-weight: 900; margin: var(--sp-3) 0; }
 .result-msg { font-size: var(--fs-sm); color: var(--text-on-card-result); line-height: 1.7; margin-bottom: var(--sp-5); }
 .result-stars { font-size: 36px; margin: var(--sp-2) 0 var(--sp-4); font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; letter-spacing: 6px; }
 .result-detail { font-size: var(--fs-xs); color: var(--text-on-card-result); background: rgba(139,115,60,0.10); border-radius: var(--radius-lg); border: 1px solid var(--border-result); padding: var(--sp-2) var(--sp-4); text-align: left; margin-bottom: var(--sp-5); max-height: 150px; overflow-y: auto; line-height: 1.8; }
 .result-detail .ok  { color: var(--correct); font-weight: 700; }
 .result-detail .err { color: var(--wrong);   font-weight: 700; }
-.btn-play-again { background: var(--btn-again-bg); color: var(--clr-off-white); border: none; padding: var(--sp-4) var(--sp-10); border-radius: var(--radius-full); font-family: 'Cinzel', serif; font-size: var(--fs-md); font-weight: 700; cursor: pointer; touch-action: manipulation; }
+.btn-play-again { background: var(--btn-again-bg); color: var(--clr-off-white); border: none; padding: var(--sp-4) var(--sp-10); border-radius: var(--radius-full); font-family: 'MedievalSharp', serif; font-size: var(--fs-md); font-weight: 700; cursor: pointer; touch-action: manipulation; }
 
 /* Toast */
-#toast-warning { display:none; position:fixed; bottom:var(--sp-8); left:50%; transform:translateX(-50%); background:#ff3355; color:#fff; font-family:'Nunito',sans-serif; font-size:var(--fs-sm); font-weight:700; padding:var(--sp-3) var(--sp-6); border-radius:var(--radius-full); z-index:300; text-align:center; max-width:90vw; }
+#toast-warning { display:none; position:fixed; bottom:var(--sp-8); left:50%; transform:translateX(-50%); background:#ff3355; color:#fff; font-family:'Caudex',serif; font-size:var(--fs-sm); font-weight:700; padding:var(--sp-3) var(--sp-6); border-radius:var(--radius-full); z-index:300; text-align:center; max-width:90vw; }
 
 @media (max-width: 500px) {
   .btn { padding: var(--sp-2) var(--sp-5); }
