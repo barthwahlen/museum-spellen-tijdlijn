@@ -5,104 +5,214 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vesting Maastricht – Tijdlijn Spel</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Caudex:wght@400;700&display=swap');
 :root {
+  /* ── Type scale ── */
+  --fs-xs:  clamp(11px, 1.8vw, 14px);
+  --fs-sm:  clamp(11px, 2vw,   15px);
+  --fs-md:  clamp(13px, 2.2vw, 16px);
+  --fs-lg:  clamp(14px, 2.4vw, 18px);
+  --fs-xl:  clamp(18px, 2.8vw, 24px);
+  --fs-2xl: clamp(20px, 4vw,   32px);
+
+  /* ── Primitive palette (derived from reference image) ── */
+  --clr-crimson-deep:   #7A1212;   /* title red, darkened */
+  --clr-earth:          #4A3018;   /* warm masonry brown */
+  --clr-stone-blue:     #1E3D62;   /* castle stone / shadow */
+  --clr-gold-dark:      #6A5208;   /* parchment gold, deepened */
+  --clr-forest:         #2A4E18;   /* map forest green */
+  --clr-indigo:         #1E2050;   /* castle blue-grey, deepened */
+  --clr-gold:           #B89030;   /* rope / accent gold */
+  --clr-gold-bright:    #C8A040;   /* highlight gold */
+  --clr-parchment:      #C9B89A;   /* scroll surface */
+  --clr-parchment-light:#EDE0BA;   /* card face */
+  --clr-parchment-pale: #F5F0E0;   /* lightest parchment */
+  --clr-parchment-dark: #8B7355;   /* aged scroll edge */
+  --clr-ink:            #1A0A04;   /* near-black warm */
+  --clr-off-white:      #F5F5F0;   /* lettering white */
+
+  /* ── Era / zone colours (WCAG AA ≥ 4.5:1 on white) ── */
+  --zone-roman:      #7A1212;   /* ~18:1 */
+  --zone-early-mid:  #4A3018;   /* ~10:1 */
+  --zone-mid:        #1E3D62;   /* ~10:1 */
+  --zone-burgundian: #6A5208;   /*  ~8:1 */
+  --zone-republic:   #2A4E18;   /*  ~8:1 */
+  --zone-french:     #1E2050;   /* ~14:1 */
+
+  /* ── Semantic tokens — backgrounds ── */
+  --bg-page:
+    radial-gradient(ellipse at 20% 10%, rgba(80,25,5,0.50) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 90%, rgba(30,50,90,0.40) 0%, transparent 55%),
+    linear-gradient(180deg, #130A04 0%, #0C1008 40%, #070B18 80%, #0A0804 100%);
+  --bg-surface:         rgba(200,185,155,0.10);
+  --bg-surface-raised:  rgba(200,185,155,0.16);
+  --bg-card:            var(--clr-parchment-light);
+  --bg-overlay:         rgba(0,0,0,0.78);
+  --bg-result:          linear-gradient(180deg, var(--clr-parchment-pale) 0%, var(--clr-parchment-light) 100%);
+  --bg-drop-zone:       rgba(200,185,155,0.04);
+
+  /* ── Semantic tokens — text ── */
+  --text-accent:        var(--clr-gold-bright);
+  --text-accent-glow:   rgba(200,160,64,0.65);
+  --text-ui:            rgba(222,208,178,0.92);   /* body / instructions on dark bg */
+  --text-on-card:       #2d1800;
+  --text-on-card-sub:   #7a4400;
+  --text-on-card-result:#5a3800;
+  --text-on-zone:       var(--clr-off-white);
+
+  /* ── Semantic tokens — borders ── */
+  --border-card:        #9A7848;
+  --border-pool:        rgba(180,145,80,0.45);
+  --border-zone:        rgba(255,255,255,0.15);
+  --border-zone-active: rgba(255,255,255,0.45);
+  --border-result:      rgba(168,135,60,0.32);
+
+  /* ── Semantic tokens — timeline ── */
+  --rope-bg:    linear-gradient(180deg, rgba(184,144,48,0.10) 0%, #9A7820 3%, var(--clr-gold) 15%, var(--clr-gold) 85%, #9A7820 97%, rgba(184,144,48,0.10) 100%);
+  --rope-glow:  0 0 18px rgba(184,144,48,0.65), 0 2px 8px rgba(0,0,0,0.45);
+  --tick-color: rgba(200,170,60,0.85);
+  --year-color: rgba(210,178,72,0.92);
+
+  /* ── Semantic tokens — interaction states ── */
+  --selected-color:  var(--clr-gold-bright);
+  --selected-glow:   rgba(200,160,64,0.55);
+  --drag-over-bg:    rgba(184,144,48,0.20);
+
+  /* ── Semantic tokens — feedback ── */
   --correct: #00bb55;
-  --wrong: #ff3355;
+  --wrong:   #ff3355;
+
+  /* ── Semantic tokens — buttons ── */
+  --btn-check-bg:     linear-gradient(180deg, #8B5A00, #C8900A);
+  --btn-check-color:  #2d1800;
+  --btn-reset-bg:     rgba(200,185,155,0.10);
+  --btn-reset-color:  rgba(222,208,178,0.90);
+  --btn-reset-border: rgba(200,185,155,0.22);
+  --btn-again-bg:     linear-gradient(180deg, var(--clr-stone-blue), var(--clr-indigo));
+
+  /* ── Spacing scale (8 px base grid, 4 px half-step) ── */
+  --sp-1:   4px;
+  --sp-2:   8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-7:  28px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-14: 56px;
+  --sp-16: 64px;
+
+  /* ── Radius scale (references spacing) ── */
+  --radius-sm:   var(--sp-1);   /*  4 px — tight chips      */
+  --radius-md:   var(--sp-2);   /*  8 px — zones, inputs    */
+  --radius-lg:   var(--sp-3);   /* 12 px — cards            */
+  --radius-xl:   var(--sp-5);   /* 20 px — panels, tooltips */
+  --radius-full: var(--sp-10);  /* 40 px — pill buttons     */
+
+  /* ── Component dimensions ── */
+  --h-timeline-markers: 72px;          /* 9 × 8 px — labels + rope */
+  --h-timeline-rope-top: var(--sp-12); /* 48 px — rope Y offset    */
+  --h-return-btn: var(--sp-5);         /* 20 px — ✕ button size    */
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
-  background:
-    radial-gradient(ellipse at 22% 15%, rgba(90,10,200,0.38) 0%, transparent 52%),
-    radial-gradient(ellipse at 78% 85%, rgba(10,55,150,0.38) 0%, transparent 52%),
-    linear-gradient(160deg, #0d0030 0%, #16004a 30%, #060e40 65%, #00102e 100%);
+  background: var(--bg-page);
   min-height: 100vh;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Caudex', serif;
   overflow-x: hidden;
   width: 100%;
 }
 .header {
   text-align: center;
-  padding: 24px 20px 16px;
+  padding: var(--sp-6) var(--sp-5) var(--sp-4);
 }
 .header::after {
   content: '';
   display: block;
-  height: 4px;
-  background: linear-gradient(90deg, #c44422, #7722bb, #1166cc, #cc8800, #007766, #445577);
-  border-radius: 2px;
-  margin-top: 16px;
+  height: var(--sp-1);
+  background: rgba(168,135,60,0.35);
+  border-radius: var(--radius-sm);
+  margin-top: var(--sp-4);
 }
 .header h1 {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(18px, 4vw, 32px);
-  color: #ffdd00;
-  text-shadow: 0 2px 16px rgba(255,100,0,0.6);
-  letter-spacing: 3px;
+  font-family: 'MedievalSharp', serif;
+  font-size: clamp(28px, 6vw, 52px);
+  color: var(--text-accent);
+  text-shadow: 0 2px 16px var(--text-accent-glow);
+  letter-spacing: 0;
 }
 .header p {
-  font-size: clamp(12px, 2vw, 15px);
-  color: rgba(200,220,255,0.9);
-  margin-top: 6px;
-  font-style: italic;
+  font-size: var(--fs-md);
+  color: var(--text-ui);
+  margin-top: var(--sp-2);
+  font-style: normal;
 }
 .instructions {
   text-align: center;
   width: 100%;
-  margin: 10px 0 14px;
-  padding: 0 16px;
-  font-size: 14px;
-  color: rgba(180,210,255,0.95);
+  margin: var(--sp-2) 0 var(--sp-4);
+  padding: 0 var(--sp-4);
+  font-size: var(--fs-md);
+  color: var(--text-ui);
   font-weight: 600;
   line-height: 1.6;
 }
-.field { width: 100%; padding: 0 12px 30px; }
+.field { width: 100%; padding: 0 var(--sp-3) var(--sp-8); }
 .card-pool {
-  background: rgba(255,255,255,0.10);
-  border: 2px dashed rgba(255,220,0,0.4);
-  border-radius: 14px;
-  padding: 8px 12px 10px;
-  margin-bottom: 14px;
+  background: var(--bg-surface);
+  border: 2px dashed var(--border-pool);
+  border-radius: var(--radius-full);
+  padding: var(--sp-7) 0 var(--sp-2);
+  margin-bottom: var(--sp-4);
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+  overflow: visible;
 }
 .pool-label {
   width: 100%;
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  color: #ffdd00;
+  font-family: 'MedievalSharp', serif;
+  font-size: var(--fs-xs);
+  color: var(--text-accent);
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-bottom: 3px;
+  margin-bottom: var(--sp-1);
   text-align: center;
 }
 .person-card {
-  width: clamp(68px, 8vw, 90px);
-  background: #fdf6e3;
-  border-radius: 14px;
-  border: 3px solid #c8b080;
+  width: clamp(110px, 14vw, 150px);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 3px solid var(--border-card);
   box-shadow: 0 6px 20px rgba(0,0,0,0.40);
   cursor: pointer;
   user-select: none;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform 0.2s, box-shadow 0.2s;
   position: relative;
   overflow: visible;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  --card-rotate: 0deg;
+  transform: rotate(var(--card-rotate));
 }
 .person-card:hover {
-  transform: translateY(-4px) rotate(1deg);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+  transform: rotate(var(--card-rotate)) translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.50);
+  z-index: 50;
 }
 /* Selected state — big visible highlight for touch */
 .person-card.selected {
-  border-color: #ffdd00 !important;
-  box-shadow: 0 0 0 4px #ffdd00, 0 8px 30px rgba(255,220,0,0.5) !important;
+  border-color: var(--selected-color) !important;
+  box-shadow: 0 0 0 4px var(--selected-color), 0 8px 30px var(--selected-glow) !important;
   transform: translateY(-6px) scale(1.06);
-  z-index: 10;
+  z-index: 100 !important;
 }
 .person-card.placed-correct {
   border-color: var(--correct);
@@ -145,13 +255,13 @@ body {
 }
 .card-portrait {
   width: 100%;
-  height: clamp(44px, 6vw, 60px);
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(24px, 3.5vw, 34px);
-  background: linear-gradient(180deg, rgba(140,100,40,0.20) 0%, rgba(140,100,40,0.05) 100%);
-  border-bottom: 1px solid rgba(120,90,30,0.22);
+  font-size: clamp(28px, 4vw, 44px);
+  background: linear-gradient(180deg, rgba(139,115,85,0.22) 0%, rgba(139,115,85,0.05) 100%);
+  border-bottom: 1px solid rgba(139,115,85,0.25);
   font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
 }
 .card-era-stripe {
@@ -161,41 +271,52 @@ body {
   border-radius: 8px 8px 0 0;
 }
 .card-name {
-  font-family: 'Cinzel', serif;
-  font-size: 8.5px;
+  font-family: 'MedievalSharp', serif;
+  font-size: var(--fs-md);
   font-weight: 700;
-  color: #2d1800;
+  color: var(--text-on-card);
   text-align: center;
-  padding: 5px 5px 2px;
+  padding: var(--sp-2) var(--sp-2) var(--sp-1);
   line-height: 1.3;
+  flex-shrink: 0;
 }
 .card-role {
-  font-size: 7.5px;
-  color: #7a4400;
+  font-size: var(--fs-md);
+  color: var(--text-on-card-sub);
   text-align: center;
-  padding: 0 5px 6px;
-  font-style: italic;
+  padding: 0 var(--sp-2) var(--sp-2);
+  font-style: normal;
   line-height: 1.3;
+  flex-shrink: 0;
 }
 /* Hint tooltip — show on selected too (for touch) */
 .card-hint-box {
   display: none;
   position: absolute;
-  bottom: 110%;
+  bottom: calc(100% + var(--sp-4));
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(20,0,60,0.97);
-  color: #e0e8ff;
-  font-size: 11px;
-  padding: 8px 12px;
-  border-radius: 8px;
+  background: rgba(0,0,0,0.85);
+  color: #ffffff;
+  font-size: var(--fs-xs);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-xl);
   z-index: 100;
   pointer-events: none;
-  border: 1px solid rgba(200,150,10,0.3);
   line-height: 1.5;
   text-align: center;
   width: 180px;
   white-space: normal;
+}
+.card-hint-box::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: var(--sp-2) solid transparent;
+  border-top-color: rgba(0,0,0,0.85);
+  border-bottom: none;
 }
 .person-card:hover .card-hint-box,
 .person-card.selected .card-hint-box { display: block; }
@@ -205,14 +326,14 @@ body.is-dragging .card-hint-box { display: none !important; }
 .return-btn {
   display: none;
   position: absolute;
-  top: -8px; right: -8px;
-  width: 20px; height: 20px;
-  background: #6622bb;
+  top: calc(-1 * var(--sp-2)); right: calc(-1 * var(--sp-2));
+  width: var(--h-return-btn); height: var(--h-return-btn);
+  background: var(--clr-stone-blue);
   color: #fff;
   border: none;
   border-radius: 50%;
-  font-size: 12px;
-  line-height: 20px;
+  font-size: var(--fs-xs);
+  line-height: var(--h-return-btn);
   text-align: center;
   cursor: pointer;
   z-index: 20;
@@ -221,110 +342,141 @@ body.is-dragging .card-hint-box { display: none !important; }
 .person-card.in-zone .return-btn { display: block; }
 
 /* Timeline */
-.timeline-wrapper { position: relative; padding: 20px 0 8px; width: 100%; overflow-x: hidden; }
+.timeline-wrapper { position: relative; padding: var(--sp-2) 0; width: 100%; overflow-x: hidden; }
+.timeline-markers { position: relative; height: var(--h-timeline-markers); margin-bottom: 0; width: 100%; }
 .timeline-rope {
   position: absolute;
-  top: 46px; left: 0; right: 0;
-  width: 100%; height: 20px;
-  background: linear-gradient(90deg, #c44422 0%, #7722bb 20%, #1166cc 47%, #cc8800 79%, #007766 88%, #445577 100%);
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(100,0,255,0.5), inset 0 2px 0 rgba(255,255,255,0.4);
+  left: 0; right: 0;
+  top: var(--h-timeline-rope-top);
+  height: 6px;
+  background: var(--rope-bg);
+  border-radius: 3px;
+  box-shadow: var(--rope-glow);
 }
-.timeline-rope::before, .timeline-rope::after {
-  content: '';
+.timeline-tick {
   position: absolute;
-  top: -16px;
-  width: 18px; height: 52px;
-  background: linear-gradient(90deg, #dd6600, #ff8800, #dd6600);
-  border-radius: 4px;
-}
-.timeline-rope::before { left: 0; }
-.timeline-rope::after  { right: 0; }
-.timeline-markers { position: relative; height: 110px; margin-bottom: 10px; width: 100%; }
-.century-mark {
-  position: absolute;
-  top: 24px;
+  top: calc(var(--sp-8) + var(--sp-1));
+  width: 2px;
+  height: var(--sp-7);
+  background: var(--tick-color);
   transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  pointer-events: none;
-  user-select: none;
+  border-radius: 1px;
+}
+.timeline-year {
+  position: absolute;
+  top: var(--sp-2);
+  font-family: 'MedievalSharp', serif;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--year-color);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  letter-spacing: 0.3px;
 }
 .drop-zones {
   display: flex;
   flex-direction: row;
   width: 100%;
-  margin-top: -4px;
   align-items: stretch;
-  min-height: calc(clamp(44px, 6vw, 60px) + 40px);
+  min-height: calc(clamp(44px, 6vw, 60px) + 160px);
 }
 .drop-zone {
   flex-shrink: 0;
   height: auto;
-  border: 2px dashed rgba(255,255,255,0.3);
-  border-radius: 12px;
-  background: rgba(255,255,255,0.04);
+  border: 2px solid var(--border-zone);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: var(--bg-drop-zone);
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  align-content: flex-start;
-  justify-content: center;
-  gap: 4px;
-  padding: 6px 3px 6px;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
   transition: background 0.2s, border-color 0.2s;
   cursor: pointer;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
-.drop-zone.drag-over, .drop-zone.touch-over {
-  background: rgba(255,220,0,0.2);
-  border-color: #ffdd00;
-  border-style: solid;
+.zone-header {
+  width: 100%;
+  padding: var(--sp-2) var(--sp-1) var(--sp-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  pointer-events: none;
+  flex-shrink: 0;
 }
-.drop-zone.has-card { border-style: solid; border-color: rgba(255,255,255,0.4); }
+.zone-header-emoji {
+  font-size: 14px;
+  line-height: 1;
+  font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+}
+.zone-header-label {
+  font-family: 'MedievalSharp', serif;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text-on-zone);
+  text-align: center;
+  line-height: 1.25;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  padding: 0 var(--sp-1);
+}
+.zone-header-years {
+  font-size: var(--fs-lg);
+  color: var(--text-on-zone);
+  font-family: 'MedievalSharp', serif;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+.zone-cards {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--sp-1);
+  padding: var(--sp-1);
+  flex: 1;
+  min-width: 0;
+}
+.card-pool .person-card {
+  aspect-ratio: 5 / 7;
+  margin: var(--sp-2) calc(-1 * var(--sp-4)) calc(-1 * var(--sp-4));
+}
+.zone-cards .person-card {
+  width: clamp(110px, 14vw, 150px);
+  flex-shrink: 0;
+  align-self: flex-start;
+  box-sizing: border-box;
+  aspect-ratio: 5 / 7;
+}
+@media (max-width: 600px) {
+  .zone-cards { flex-direction: column; }
+  .zone-cards .person-card { flex: none; width: 100%; }
+}
+.drop-zone.drag-over, .drop-zone.touch-over {
+  background: var(--drag-over-bg);
+  border-color: var(--selected-color);
+}
+.drop-zone.has-card { border-color: var(--border-zone-active); }
 .drop-zone.correct { border-color: #00ee66 !important; background: rgba(0,220,100,0.15) !important; }
 .drop-zone.wrong   { border-color: #ff3355 !important; background: rgba(255,50,80,0.15) !important; }
 
-/* Legend */
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  justify-content: center;
-  margin: 0 0 16px;
-  padding: 0 8px;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  background: rgba(255,255,255,0.10);
-  border-radius: 30px;
-  padding: 5px 14px 5px 8px;
-  border: 1.5px solid rgba(255,255,255,0.18);
-}
-.legend-swatch { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
-.legend-emoji { font-size: 16px; font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; line-height: 1; }
-.legend-text { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; color: #ffffff; white-space: nowrap; }
 
 /* Buttons */
-.btn-row { display: flex; gap: 14px; justify-content: center; padding: 20px 0 24px; flex-wrap: wrap; }
-.btn { padding: 12px 30px; border: none; border-radius: 40px; font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 1px; transition: all 0.2s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-.btn-check { background: linear-gradient(135deg, #aa7700, #ffcc00); color: #2d1800; font-size: 16px; }
-.btn-reset { background: rgba(244,232,193,0.08); color: rgba(200,220,255,0.9); border: 1px solid rgba(244,232,193,0.2); }
+.btn-row { display: flex; gap: var(--sp-4); justify-content: center; padding: var(--sp-5) 0 var(--sp-6); flex-wrap: wrap; }
+.btn { padding: var(--sp-3) var(--sp-8); border: none; border-radius: var(--radius-full); font-family: 'MedievalSharp', serif; font-size: var(--fs-sm); font-weight: 700; cursor: pointer; letter-spacing: 1px; transition: all 0.2s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.btn-check { background: var(--btn-check-bg); color: var(--btn-check-color); font-size: var(--fs-md); }
+.btn-reset { background: var(--btn-reset-bg); color: var(--btn-reset-color); border: 1px solid var(--btn-reset-border); }
 
 /* Result popup */
-.result-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; }
+.result-overlay { display: none; position: fixed; inset: 0; background: var(--bg-overlay); z-index: 200; align-items: center; justify-content: center; }
 .result-overlay.show { display: flex; }
 .result-box {
-  background: linear-gradient(160deg, #fdf6e3 0%, #f5e8c8 100%);
-  border-radius: 20px;
-  border: 2px solid rgba(180,140,40,0.30);
-  padding: 36px 40px;
+  background: var(--bg-result);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--border-result);
+  padding: var(--sp-8) var(--sp-10);
   max-width: 480px;
   width: 90%;
   text-align: center;
@@ -332,24 +484,21 @@ body.is-dragging .card-hint-box { display: none !important; }
   animation: popIn 0.4s cubic-bezier(0.22,1,0.36,1);
 }
 @keyframes popIn { from { opacity:0; transform: scale(0.7); } to { opacity:1; transform: scale(1); } }
-.result-seal { font-size: 64px; line-height: 1; margin-bottom: 12px; font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; }
-.result-title { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 900; color: #2d1800; margin-bottom: 8px; }
-.result-score { font-family: 'Cinzel', serif; font-size: 36px; font-weight: 900; margin: 12px 0; }
-.result-msg { font-size: 14px; color: #5a3800; line-height: 1.7; margin-bottom: 20px; }
-.result-stars { font-size: 36px; margin: 8px 0 16px; font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; letter-spacing: 6px; }
-.result-detail { font-size: 12px; color: #5a3800; background: rgba(140,100,20,0.10); border-radius: 10px; border: 1px solid rgba(180,140,40,0.20); padding: 10px 14px; text-align: left; margin-bottom: 20px; max-height: 150px; overflow-y: auto; line-height: 1.8; }
+.result-seal { font-size: 64px; line-height: 1; margin-bottom: var(--sp-3); font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; }
+.result-title { font-family: 'MedievalSharp', serif; font-size: var(--fs-xl); font-weight: 900; color: var(--text-on-card); margin-bottom: var(--sp-2); }
+.result-score { font-family: 'MedievalSharp', serif; font-size: clamp(22px, 3.5vw, 36px); font-weight: 900; margin: var(--sp-3) 0; }
+.result-msg { font-size: var(--fs-sm); color: var(--text-on-card-result); line-height: 1.7; margin-bottom: var(--sp-5); }
+.result-stars { font-size: 36px; margin: var(--sp-2) 0 var(--sp-4); font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; letter-spacing: 6px; }
+.result-detail { font-size: var(--fs-xs); color: var(--text-on-card-result); background: rgba(139,115,60,0.10); border-radius: var(--radius-lg); border: 1px solid var(--border-result); padding: var(--sp-2) var(--sp-4); text-align: left; margin-bottom: var(--sp-5); max-height: 150px; overflow-y: auto; line-height: 1.8; }
 .result-detail .ok  { color: var(--correct); font-weight: 700; }
 .result-detail .err { color: var(--wrong);   font-weight: 700; }
-.btn-play-again { background: linear-gradient(135deg, #4411bb, #aa22ff); color: #fff; border: none; padding: 14px 40px; border-radius: 40px; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+.btn-play-again { background: var(--btn-again-bg); color: var(--clr-off-white); border: none; padding: var(--sp-4) var(--sp-10); border-radius: var(--radius-full); font-family: 'MedievalSharp', serif; font-size: var(--fs-md); font-weight: 700; cursor: pointer; touch-action: manipulation; }
 
 /* Toast */
-#toast-warning { display:none; position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#ff3355; color:#fff; font-family:'Nunito',sans-serif; font-size:14px; font-weight:700; padding:12px 24px; border-radius:40px; z-index:300; text-align:center; max-width:90vw; }
+#toast-warning { display:none; position:fixed; bottom:var(--sp-8); left:50%; transform:translateX(-50%); background:#ff3355; color:#fff; font-family:'Caudex',serif; font-size:var(--fs-sm); font-weight:700; padding:var(--sp-3) var(--sp-6); border-radius:var(--radius-full); z-index:300; text-align:center; max-width:90vw; }
 
 @media (max-width: 500px) {
-  .legend-text { font-size: 9px; }
-  .legend-item { padding: 4px 8px 4px 6px; gap: 4px; }
-  .btn { font-size: 12px; padding: 10px 18px; }
-  .header h1 { font-size: 18px; }
+  .btn { padding: var(--sp-2) var(--sp-5); }
 }
 </style>
 </head>
@@ -369,7 +518,6 @@ body.is-dragging .card-hint-box { display: none !important; }
   <div class="card-pool" id="card-pool">
     <div class="pool-label">↓ Selecteer een figuur, dan een tijdvak ↓</div>
   </div>
-  <div class="legend" id="legend"></div>
   <div class="timeline-wrapper">
     <div class="timeline-markers" id="timeline-markers" style="pointer-events:none;">
       <div class="timeline-rope"></div>
@@ -400,23 +548,23 @@ body.is-dragging .card-hint-box { display: none !important; }
 const START_YEAR = 50, END_YEAR = 1867;
 
 const zones = [
-  { id:'z1', startYear:50,   endYear:400,  label:'Romeinse Tijd',            color:'#c44422', emoji:'🏛️' },
-  { id:'z2', startYear:400,  endYear:900,  label:'Vroege Middeleeuwen',       color:'#7722bb', emoji:'⛪' },
-  { id:'z3', startYear:900,  endYear:1480, label:'Middeleeuwen',              color:'#1166cc', emoji:'🗼' },
-  { id:'z4', startYear:1480, endYear:1635, label:'Bourgondisch & Spaans',     color:'#cc8800', emoji:'👑' },
-  { id:'z5', startYear:1635, endYear:1794, label:'Republiek der Nederlanden', color:'#007766', emoji:'🛡️' },
-  { id:'z6', startYear:1794, endYear:1867, label:'Frans Bestuur & Opheffing', color:'#445577', emoji:'⚜️' },
+  { id:'z1', startYear:50,   endYear:400,  label:'Romeinse Tijd',            color:'#7A1212', emoji:'🏛️' },
+  { id:'z2', startYear:400,  endYear:900,  label:'Vroege Middeleeuwen',       color:'#4A3018', emoji:'⛪' },
+  { id:'z3', startYear:900,  endYear:1480, label:'Middeleeuwen',              color:'#1E3D62', emoji:'🗼' },
+  { id:'z4', startYear:1480, endYear:1635, label:'Bourgondisch & Spaans',     color:'#6A5208', emoji:'👑' },
+  { id:'z5', startYear:1635, endYear:1794, label:'Republiek der Nederlanden', color:'#2A4E18', emoji:'🛡️' },
+  { id:'z6', startYear:1794, endYear:1867, label:'Frans Bestuur & Opheffing', color:'#1E2050', emoji:'⚜️' },
 ];
 
 const persons = [
-  { id:'p1', emoji:'✝️', name:'Servatius van Tongeren', role:'Bisschop van Maastricht', correctZone:'z1', hint:'Ik was de eerste bisschop van de Nederlanden, Romeinse tijd.', color:'#c44422' },
-  { id:'p2', emoji:'⚜️', name:'Karel de Grote',         role:'Frankisch Keizer',        correctZone:'z2', hint:'Vroege Middeleeuwen — ik versterkte wegen langs de Maas.', color:'#7722bb' },
-  { id:'p3', emoji:'👑', name:'Hendrik I van Brabant',  role:'Hertog van Brabant',       correctZone:'z3', hint:'Middeleeuwen — ik gaf Maastricht stadsrechten in 1229.', color:'#1166cc' },
-  { id:'p4', emoji:'👑', name:'Karel V',                role:'Rooms-Duits keizer',       correctZone:'z4', hint:'Bourgondisch & Spaans — ik moderniseerde de vestingwerken.', color:'#cc8800' },
-  { id:'p5', emoji:'⚔️', name:'Alessandro Farnese',     role:'Spaans aanvoerder',        correctZone:'z4', hint:'Spaanse periode — ik veroverde Maastricht in 1579.', color:'#cc8800' },
-  { id:'p6', emoji:'🏴', name:'Frederik Hendrik',       role:'Prins van Oranje',         correctZone:'z5', hint:'Republiek — ik veroverde Maastricht in 1632 met loopgraven.', color:'#007766' },
-  { id:'p7', emoji:'⚙️', name:'Sébastien de Vauban',    role:'Frans vestingbouwer',      correctZone:'z5', hint:'Republiek — ik leidde de aanval op Maastricht voor Lodewijk XIV.', color:'#007766' },
-  { id:'p8', emoji:'🏗️', name:'Menno van Coehoorn',     role:'Nederlands vestingbouwer', correctZone:'z5', hint:'Republiek — ik bouwde de vestinggordel rond Maastricht.', color:'#007766' },
+  { id:'p1', emoji:'✝️', name:'Servatius van Tongeren', role:'Bisschop van Maastricht', correctZone:'z1', hint:'Ik was de eerste bisschop van de Nederlanden, Romeinse tijd.', color:'#7A1212' },
+  { id:'p2', emoji:'⚜️', name:'Karel de Grote',         role:'Frankisch Keizer',        correctZone:'z2', hint:'Vroege Middeleeuwen — ik versterkte wegen langs de Maas.', color:'#4A3018' },
+  { id:'p3', emoji:'👑', name:'Hendrik I van Brabant',  role:'Hertog van Brabant',       correctZone:'z3', hint:'Middeleeuwen — ik gaf Maastricht stadsrechten in 1229.', color:'#1E3D62' },
+  { id:'p4', emoji:'👑', name:'Karel V',                role:'Rooms-Duits keizer',       correctZone:'z4', hint:'Bourgondisch & Spaans — ik moderniseerde de vestingwerken.', color:'#6A5208' },
+  { id:'p5', emoji:'⚔️', name:'Alessandro Farnese',     role:'Spaans aanvoerder',        correctZone:'z4', hint:'Spaanse periode — ik veroverde Maastricht in 1579.', color:'#6A5208' },
+  { id:'p6', emoji:'🏴', name:'Frederik Hendrik',       role:'Prins van Oranje',         correctZone:'z5', hint:'Republiek — ik veroverde Maastricht in 1632 met loopgraven.', color:'#2A4E18' },
+  { id:'p7', emoji:'⚙️', name:'Sébastien de Vauban',    role:'Frans vestingbouwer',      correctZone:'z5', hint:'Republiek — ik leidde de aanval op Maastricht voor Lodewijk XIV.', color:'#2A4E18' },
+  { id:'p8', emoji:'🏗️', name:'Menno van Coehoorn',     role:'Nederlands vestingbouwer', correctZone:'z5', hint:'Republiek — ik bouwde de vestinggordel rond Maastricht.', color:'#2A4E18' },
 ];
 
 const personsById = Object.fromEntries(persons.map(p => [p.id, p]));
@@ -446,50 +594,65 @@ function setSelected(id) {
 function buildTimeline() {
   const markersEl = document.getElementById('timeline-markers');
   const zonesEl   = document.getElementById('drop-zones');
-  const legendEl  = document.getElementById('legend');
-
-  legendEl.innerHTML = '';
-  zones.forEach(z => {
-    const item = document.createElement('div');
-    item.className = 'legend-item';
-    item.innerHTML = `<div class="legend-swatch" style="background:${z.color}"></div><span class="legend-emoji">${z.emoji}</span><span class="legend-text">${z.label}</span>`;
-    legendEl.appendChild(item);
-  });
 
   // Keep rope, remove old bands/marks
   const rope = markersEl.querySelector('.timeline-rope');
   markersEl.innerHTML = '';
   markersEl.appendChild(rope);
+
+  // Tick marks and year labels at each zone boundary
+  const n = zones.length;
+  zones.forEach((z, i) => {
+    const pct = (i / n) * 100;
+
+    const tick = document.createElement('div');
+    tick.className = 'timeline-tick';
+    tick.style.left = pct + '%';
+    markersEl.appendChild(tick);
+
+    const label = document.createElement('div');
+    label.className = 'timeline-year';
+    label.style.left = pct + '%';
+    if (i === 0) label.style.transform = 'none';
+    label.textContent = z.startYear + ' n.Chr.';
+    markersEl.appendChild(label);
+  });
+
+  // Final boundary tick + label
+  const endTick = document.createElement('div');
+  endTick.className = 'timeline-tick';
+  endTick.style.left = '100%';
+  markersEl.appendChild(endTick);
+
+  const endLabel = document.createElement('div');
+  endLabel.className = 'timeline-year';
+  endLabel.style.left = '100%';
+  endLabel.style.transform = 'translateX(-100%)';
+  endLabel.textContent = zones[n - 1].endYear + ' n.Chr.';
+  markersEl.appendChild(endLabel);
+
   zonesEl.innerHTML = '';
 
-  zones.forEach((z, i) => {
+  zones.forEach(z => {
     const sp = yearToPercent(z.startYear), ep = yearToPercent(z.endYear);
-    const wp = ep - sp, mp = (sp + ep) / 2;
-
-    const band = document.createElement('div');
-    band.style.cssText = `position:absolute;top:46px;left:${sp}%;width:${wp}%;height:20px;background:${z.color};opacity:0.35;border-radius:6px;pointer-events:none;`;
-    markersEl.appendChild(band);
-
-    if (z.startYear > START_YEAR) {
-      const mk = document.createElement('div');
-      mk.className = 'century-mark';
-      mk.style.left = sp + '%';
-      mk.innerHTML = `<div style="width:2px;height:18px;background:#fff;opacity:0.6"></div><div style="font-family:'Cinzel',serif;font-size:9px;font-weight:700;color:#fff;text-shadow:0 1px 5px #000;transform:translateX(-50%);">${z.startYear}</div>`;
-      markersEl.appendChild(mk);
-    }
-
-    const nl = document.createElement('div');
-    nl.style.cssText = `position:absolute;top:50px;left:${mp}%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:9px;font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.9);pointer-events:none;z-index:2;user-select:none;`;
-    nl.textContent = i + 1;
-    markersEl.appendChild(nl);
+    const wp = ep - sp;
 
     const el = document.createElement('div');
     el.className = 'drop-zone';
     el.id = z.id;
-    el.style.flexBasis = wp + '%';
-    el.style.flexGrow  = '0';
-    el.style.borderColor = z.color + '77';
-    el.style.background  = z.color + '11';
+    el.style.flex = '1 0 0';
+    el.style.minWidth = '0';
+    el.style.borderColor = z.color + 'aa';
+
+    const header = document.createElement('div');
+    header.className = 'zone-header';
+    header.style.background = z.color;
+    header.innerHTML = `<div class="zone-header-label">${z.label}</div><div class="zone-header-years">${z.startYear} – ${z.endYear}</div>`;
+    el.appendChild(header);
+
+    const cardsArea = document.createElement('div');
+    cardsArea.className = 'zone-cards';
+    el.appendChild(cardsArea);
 
     // Mouse drag-and-drop
     el.addEventListener('dragover',  e => { e.preventDefault(); el.classList.add('drag-over'); });
@@ -534,8 +697,14 @@ function createCard(p, inZone) {
     <div class="card-portrait">${p.emoji}</div>
     <div class="card-name">${p.name}</div>
     <div class="card-role">${p.role}</div>
-    <div class="card-hint-box">💡 ${p.hint}</div>
+    <div class="card-hint-box">💡 ${p.hint.includes('—') ? p.hint.split('—')[1].trim() : p.hint}</div>
   `;
+
+  if (!inZone) {
+    const angle = ((Math.random() - 0.5) * 18).toFixed(1);
+    card.style.setProperty('--card-rotate', angle + 'deg');
+    card.style.zIndex = String(Math.floor(Math.random() * 8) + 1);
+  }
 
   // Mouse drag
   let dragGhost = null;
@@ -582,6 +751,39 @@ function createCard(p, inZone) {
   return card;
 }
 
+function updateTickPositions() {
+  const zonesEl   = document.getElementById('drop-zones');
+  const markersEl = document.getElementById('timeline-markers');
+  if (!zonesEl || !markersEl) return;
+  const { left: base, width: total } = zonesEl.getBoundingClientRect();
+  if (total === 0) return;
+  const ticks  = markersEl.querySelectorAll('.timeline-tick');
+  const labels = markersEl.querySelectorAll('.timeline-year');
+  const n = zones.length;
+  zones.forEach((z, i) => {
+    const el = document.getElementById(z.id);
+    if (!el) return;
+    const pct = ((el.getBoundingClientRect().left - base) / total) * 100;
+    if (ticks[i])  ticks[i].style.left  = pct + '%';
+    if (labels[i]) { labels[i].style.left = pct + '%'; labels[i].style.transform = i === 0 ? 'none' : 'translateX(-50%)'; }
+  });
+  const last = document.getElementById(zones[n - 1].id);
+  if (last) {
+    const pct = ((last.getBoundingClientRect().right - base) / total) * 100;
+    if (ticks[n])  ticks[n].style.left  = pct + '%';
+    if (labels[n]) { labels[n].style.left = pct + '%'; labels[n].style.transform = 'translateX(-100%)'; }
+  }
+}
+
+function updateZoneWidths() {
+  zones.forEach(z => {
+    const count = (placement[z.id] || []).length;
+    const el = document.getElementById(z.id);
+    if (el) el.style.flex = `${1 + count} 0 0`;
+  });
+  requestAnimationFrame(updateTickPositions);
+}
+
 function placeCard(zoneId) {
   if (!selectedId || checked) return;
 
@@ -601,8 +803,9 @@ function placeCard(zoneId) {
 
   const zone = document.getElementById(zoneId);
   zone.classList.add('has-card');
-  zone.appendChild(createCard(personsById[selectedId], true));
+  (zone.querySelector('.zone-cards') || zone).appendChild(createCard(personsById[selectedId], true));
 
+  updateZoneWidths();
   setSelected(null);
 }
 
@@ -617,6 +820,7 @@ function returnCardToPool(personId) {
     }
   }
   document.getElementById('card-pool').appendChild(createCard(personsById[personId], false));
+  updateZoneWidths();
 }
 
 function showWarning(msg) {
@@ -686,6 +890,7 @@ function resetGame() {
     if (el) { el.classList.remove('has-card','correct','wrong'); el.querySelectorAll('.person-card').forEach(c=>c.remove()); }
   });
   buildCards(true);
+  updateZoneWidths();
 }
 
 // Klik buiten kaarten = deselecteer
@@ -693,6 +898,8 @@ document.addEventListener('click', () => setSelected(null));
 
 buildTimeline();
 buildCards(true);
+requestAnimationFrame(updateTickPositions);
+window.addEventListener('resize', updateTickPositions);
 </script>
 </body>
 </html>
