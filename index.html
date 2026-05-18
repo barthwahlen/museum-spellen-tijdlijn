@@ -256,6 +256,7 @@ body {
 .card-portrait {
   width: 100%;
   flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -263,6 +264,14 @@ body {
   background: linear-gradient(180deg, rgba(139,115,85,0.22) 0%, rgba(139,115,85,0.05) 100%);
   border-bottom: 1px solid rgba(139,115,85,0.25);
   font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  overflow: hidden;
+}
+.card-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
 }
 .card-era-stripe {
   position: absolute;
@@ -557,14 +566,14 @@ const zones = [
 ];
 
 const persons = [
-  { id:'p1', emoji:'✝️', name:'Servatius van Tongeren', role:'Bisschop van Maastricht', correctZone:'z1', hint:'Ik was de eerste bisschop van de Nederlanden, Romeinse tijd.', color:'#7A1212' },
-  { id:'p2', emoji:'⚜️', name:'Karel de Grote',         role:'Frankisch Keizer',        correctZone:'z2', hint:'Vroege Middeleeuwen — ik versterkte wegen langs de Maas.', color:'#4A3018' },
-  { id:'p3', emoji:'👑', name:'Hendrik I van Brabant',  role:'Hertog van Brabant',       correctZone:'z3', hint:'Middeleeuwen — ik gaf Maastricht stadsrechten in 1229.', color:'#1E3D62' },
-  { id:'p4', emoji:'👑', name:'Karel V',                role:'Rooms-Duits keizer',       correctZone:'z4', hint:'Bourgondisch & Spaans — ik moderniseerde de vestingwerken.', color:'#6A5208' },
-  { id:'p5', emoji:'⚔️', name:'Alessandro Farnese',     role:'Spaans aanvoerder',        correctZone:'z4', hint:'Spaanse periode — ik veroverde Maastricht in 1579.', color:'#6A5208' },
-  { id:'p6', emoji:'🏴', name:'Frederik Hendrik',       role:'Prins van Oranje',         correctZone:'z5', hint:'Republiek — ik veroverde Maastricht in 1632 met loopgraven.', color:'#2A4E18' },
-  { id:'p7', emoji:'⚙️', name:'Sébastien de Vauban',    role:'Frans vestingbouwer',      correctZone:'z5', hint:'Republiek — ik leidde de aanval op Maastricht voor Lodewijk XIV.', color:'#2A4E18' },
-  { id:'p8', emoji:'🏗️', name:'Menno van Coehoorn',     role:'Nederlands vestingbouwer', correctZone:'z5', hint:'Republiek — ik bouwde de vestinggordel rond Maastricht.', color:'#2A4E18' },
+  { id:'p1', image:'historical_figures/Saint_Servatius.jpg',      name:'Servatius van Tongeren', role:'Bisschop van Maastricht', correctZone:'z1', hint:'Ik was de eerste bisschop van de Nederlanden, Romeinse tijd.', color:'#7A1212' },
+  { id:'p2', image:'historical_figures/Charlemagne.jpg',          name:'Karel de Grote',         role:'Frankisch Keizer',        correctZone:'z2', hint:'Vroege Middeleeuwen — ik versterkte wegen langs de Maas.', color:'#4A3018' },
+  { id:'p3', image:'historical_figures/Hendrik_I_van_Brabant.jpg',name:'Hendrik I van Brabant',  role:'Hertog van Brabant',       correctZone:'z3', hint:'Middeleeuwen — ik gaf Maastricht stadsrechten in 1229.', color:'#1E3D62' },
+  { id:'p4', image:'historical_figures/Karel_V.jpg',              name:'Karel V',                role:'Rooms-Duits keizer',       correctZone:'z4', hint:'Bourgondisch & Spaans — ik moderniseerde de vestingwerken.', color:'#6A5208' },
+  { id:'p5', image:'historical_figures/Alessandro_Farnese.jpg',   name:'Alessandro Farnese',     role:'Spaans aanvoerder',        correctZone:'z4', hint:'Spaanse periode — ik veroverde Maastricht in 1579.', color:'#6A5208' },
+  { id:'p6', image:'historical_figures/Frederik_Hendrik.jpg',     name:'Frederik Hendrik',       role:'Prins van Oranje',         correctZone:'z5', hint:'Republiek — ik veroverde Maastricht in 1632 met loopgraven.', color:'#2A4E18' },
+  { id:'p7', image:'historical_figures/Vauban.jpg',               name:'Sébastien de Vauban',    role:'Frans vestingbouwer',      correctZone:'z5', hint:'Republiek — ik leidde de aanval op Maastricht voor Lodewijk XIV.', color:'#2A4E18' },
+  { id:'p8', image:'historical_figures/Menno_van_Coehoorn.jpg',   name:'Menno van Coehoorn',     role:'Nederlands vestingbouwer', correctZone:'z5', hint:'Republiek — ik bouwde de vestinggordel rond Maastricht.', color:'#2A4E18' },
 ];
 
 const personsById = Object.fromEntries(persons.map(p => [p.id, p]));
@@ -694,7 +703,7 @@ function createCard(p, inZone) {
   card.innerHTML = `
     ${inZone ? returnBtn : ''}
     <div class="card-era-stripe" style="background:${p.color}"></div>
-    <div class="card-portrait">${p.emoji}</div>
+    <div class="card-portrait">${p.image ? `<img src="${p.image}" alt="${p.name}" loading="eager" decoding="async">` : p.emoji}</div>
     <div class="card-name">${p.name}</div>
     <div class="card-role">${p.role}</div>
     <div class="card-hint-box">💡 ${p.hint.includes('—') ? p.hint.split('—')[1].trim() : p.hint}</div>
